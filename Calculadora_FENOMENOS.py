@@ -7,25 +7,28 @@ Created on Mon Aug 31 12:11:46 2020
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 
-'''    
-Exemplo de Teste:
-x = np.array([-2.09,-1.76,-1.51,-1.22,-.92,-.69,-.56,-.41,-.25,-.07])
-y = np.array([0.002915,.002976,.00303,.003086,.003154,.003215,.003247,
-                .003279,.003322,.003356])
-alpha_square = np.array([4E-06,4E-06,4E-06,5E-06,5E-06,5E-06,5E-06,
-                            5E-06,6E-06,6E-06])**2
-'''
 def main():
     lista_exp_data = []
     lista_summation = []
     ix_exp_data = []
     print("Calculadora de MMQ")
+    d = (input('Do you want to run an example or to insert experimental data?[r or i]: ')).lower()
+    if d == 'r':   
+    #Exemplo de Teste:
+        n = 10
+        x = np.array([-2.09,-1.76,-1.51,-1.22,-.92,-.69,-.56,-.41,-.25,-.07])
+        y = np.array([0.002915,.002976,.00303,.003086,.003154,.003215,.003247,
+                .003279,.003322,.003356])
+        alpha_square = np.array([4E-06,4E-06,4E-06,5E-06,5E-06,5E-06,5E-06,
+                            5E-06,6E-06,6E-06])**2
+    else:
     #Inserção de dados do experimento
-    n = int(input('Qual o número de dados a ser computado?: '))
-    x = np.array([float(input(f'Digite o valor de x[{x}]: ')) for x in range(n)])
-    y = np.array([float(input(f'Digite o valor de y[{y}]: ')) for y in range(n)])
-    alpha_square = np.array([(float(input(f'Digite o erro experimental de y[{y}]: ')))**2 for y in range(n)])
+        n = int(input('Qual o número de dados a ser computado?: '))
+        x = np.array([float(input(f'Digite o valor de x[{x}]: ')) for x in range(n)])
+        y = np.array([float(input(f'Digite o valor de y[{y}]: ')) for y in range(n)])
+        alpha_square = np.array([(float(input(f'Digite o erro experimental de y[{y}]: ')))**2 for y in range(n)])
     
 
 #Criando DataFrame para os dados digitados pelo usuário
@@ -66,10 +69,7 @@ def main():
     
     print(f'\nSlope: {a}, Linear Coefficient: {b}')
 #plot do gráfico com os pontos das coordenadas x e y, além da reta que melhor se ajusta.
-    y1 = a*x+b
-    plt.title('Graph of  x and y')
-    plt.xlabel('x-values')
-    plt.ylabel('y-values')
+    
     #plt.yticks([0.0025,0.0030,0.0035,0.0040,0.0045,0.0050])
     if x.min() < 0:
         xmin = x.min()*1.1
@@ -91,10 +91,16 @@ def main():
     else:
         ymax = y.max()*1.1
 
+    y1 = a*x+b
+    plt.title('Graph of  x and y')
+    plt.xlabel('x-values')
+    plt.ylabel('y-values')
     plt.xlim(xmin,xmax)
     plt.ylim(ymin,ymax)
-    plt.scatter(x,y)
-    plt.plot(x,y1)
+    plt.tight_layout()
+    plt.scatter(x, y, color='k', label = 'Experiment points')
+    plt.plot(x, y1, color='b', label = 'Best fit line')
+    plt.legend()
     plt.show()
 
 main()
