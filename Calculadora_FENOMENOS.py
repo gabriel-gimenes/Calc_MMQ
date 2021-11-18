@@ -3,6 +3,8 @@
 Created on Mon Aug 31 12:11:46 2020
 
 @author: gabri
+
+I did some changes here. Gabriel Gimenes was here!
 """
 import numpy as np
 import pandas as pd
